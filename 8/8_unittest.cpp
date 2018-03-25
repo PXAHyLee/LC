@@ -38,6 +38,21 @@ TEST(StringToInteger, WhenCalledWithLeadingSpaces1_ReturnOne) {
   EXPECT_EQ(std::atoi(str), ret);
 }
 
+TEST(StringToInteger, WhenCalledWithInvalidString_ReturnZero) {
+  Solution sol;
+  // raw_characters
+  // prefix(opt) R"delimiter(raw_characters)delimiter";
+  const char* str = R";(" b11228552307");";
+  std::string s(str);
+  auto ret = sol.myAtoi(s);
+  EXPECT_EQ(std::atoi(str), ret);
+
+  const char* str2 = R";("9223372036854775809");";
+  std::string s2(str);
+  ret = sol.myAtoi(s);
+  EXPECT_EQ(std::atoi(str2), ret);
+}
+
 TEST(StringToInteger, WhenCalledWithPlus1_ReturnOne) {
   Solution sol;
   const char* str = "+1";

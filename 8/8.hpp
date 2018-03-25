@@ -16,11 +16,14 @@ static_assert(INT_MIN == -2147483648, "INT_MIN");
 class Solution {
  public:
   int myAtoi(std::string str) {
-    auto const prefix = [](int c) {
-      return std::isdigit(c) || c == '+' || c == '-';
-    };
-    auto first = std::find_if(str.cbegin(), str.cend(), prefix);
-    if (first == str.cend()) return 0;
+    auto const space = [](int c) { return std::isspace(c); };
+    auto const signedCharacter = [](int c) { return c == '+' || c == '-'; };
+    auto const first = std::find_if_not(str.cbegin(), str.cend(), space);
+    if ((!str.empty() && first == str.cend()) ||
+        (first != str.cend() && !signedCharacter(*first) &&
+         !std::isdigit(*first))) {
+      return 0;
+    }
 
     bool negative{};
     int value{};
